@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "JioHotstar Subtitle Sync",
+  "version": "5.0.0",
+  "description": "Control subtitle delay/advance on JioHotstar with a floating panel.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.jiohotstar.com/*",
+        "*://*.hotstar.com/*"
+      ],
+      "js": ["page.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "*://*.jiohotstar.com/*",
+        "*://*.hotstar.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "world": "ISOLATED"
+    }
+  ]
+}
