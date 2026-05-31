@@ -1,0 +1,5 @@
+# Exclude website workspace files and heavy media assets from the user ZIP download release
+web-site/ export-ignore
+.github/ export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
