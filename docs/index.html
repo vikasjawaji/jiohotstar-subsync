@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubSync — Subtitle Synchronization for Hotstar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070913;
+            --bg-surface: rgba(15, 22, 42, 0.4);
+            --bg-surface-solid: #0f172a;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #f5c842;
+            --cyan: #4fc3f7;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .bg-glows {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .glow-1 {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(245, 200, 66, 0.04) 0%, rgba(0,0,0,0) 70%);
+            top: -300px;
+            right: -100px;
+        }
+        .glow-2 {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(79, 195, 247, 0.03) 0%, rgba(0,0,0,0) 70%);
+            top: 600px;
+            left: -200px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-glass);
+        }
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .logo-icon {
+            background: rgba(245, 200, 66, 0.1);
+            border: 1px solid rgba(245, 200, 66, 0.3);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+        .nav-link:hover {
+            color: var(--text);
+        }
+        .btn-git {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+        .btn-git:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 96px 0 64px;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(245, 200, 66, 0.08);
+            border: 1px solid rgba(245, 200, 66, 0.2);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+        h1 {
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 640px;
+            margin: 0 auto 36px;
+        }
+        .hero-ctas {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: #ffffff;
+            color: #070913;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 15px;
+            box-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.15);
+            transition: var(--transition-smooth);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(255, 255, 255, 0.25);
+        }
+
+        .bento-section {
+            padding: 64px 0;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .bento-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow-premium);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .bento-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .col-12 { grid-column: span 12; }
+        .col-8 { grid-column: span 8; }
+        .col-4 { grid-column: span 4; }
+
+        .card-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        .bento-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        .bento-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .screenshot-showcase {
+            display: flex;
+            gap: 24px;
+            margin-top: 32px;
+        }
+        .screenshot-item {
+            flex: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            background: rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .screenshot-item:hover img {
+            transform: scale(1.03);
+        }
+        .screenshot-tag {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border-glass);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .shortcut-table {
+            margin-top: 24px;
+        }
+        .shortcut-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .shortcut-row:last-child {
+            border-bottom: none;
+        }
+        .shortcut-action {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .keycap {
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-glass);
+            padding: 3px 8px;
+            border-radius: 6px;
+            color: var(--accent);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.3);
+        }
+
+        /* Tokenized Theme Switcher Styles (No Hacky JS Layout Injections) */
+        .theme-preview-box {
+            margin-top: 24px;
+            border-radius: 16px;
+            padding: 24px;
+            transition: var(--transition-smooth);
+            background: rgba(22, 28, 41, 0.82);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #f8fafc;
+        }
+        .theme-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .theme-preview-title {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .theme-preview-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .theme-preview-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+        }
+        .theme-preview-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .theme-preview-pill-row {
+            display: flex;
+            gap: 6px;
+        }
+        .theme-preview-pill {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            transition: var(--transition-smooth);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(245, 200, 66, 0.15);
+            color: #f5c842;
+        }
+        .theme-preview-pill.secondary {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+        }
+
+        /* Scoped theme state transformations */
+        .theme-preview-box[data-theme="simple"] {
+            background: #0f172a;
+            backdrop-filter: none;
+            border: 1px solid #334155;
+            color: #f8fafc;
+        }
+        .theme-preview-box[data-theme="simple"] .theme-preview-pill {
+            border: 1px solid #1e293b;
+            background: #3b82f6;
+            color: #fff;
+        }
+        .theme-preview-box[data-theme="simple"] .theme-preview-pill.secondary {
+            border: 1px solid #334155;
+            background: rgba(255,255,255,0.05);
+            color: #94a3b8;
+        }
+
+        .theme-preview-box[data-theme="neubrutalism"] {
+            background: #ffffff;
+            backdrop-filter: none;
+            border: 2px solid #000000;
+            color: #000000;
+        }
+        .theme-preview-box[data-theme="neubrutalism"] .theme-preview-pill {
+            border: 2px solid #000000;
+            background: #ffde4d;
+            color: #000000;
+            font-weight: 600;
+        }
+        .theme-preview-box[data-theme="neubrutalism"] .theme-preview-pill.secondary {
+            border: 2px solid #000000;
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .theme-picker-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .theme-picker-btn {
+            flex: 1;
+            padding: 10px 0;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: center;
+        }
+        .theme-picker-btn.active {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        .install-section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border-glass);
+        }
+        .install-content-wrapper {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .install-pane {
+            background: var(--bg-surface-solid);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-premium);
+        }
+        .step-item {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+        .step-num {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Mono', monospace;
+            font-weight: 700;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        .step-content h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .step-content p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .faq-section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border-glass);
+        }
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .faq-item {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+        .faq-question {
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            user-select: none;
+        }
+        .faq-icon {
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            border-top: 0px solid transparent;
+        }
+        .faq-item.open .faq-answer {
+            padding: 0 24px 24px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+            color: var(--accent);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-glass);
+            padding: 48px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--text);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+        .footer-link:hover {
+            color: var(--text);
+        }
+
+        @media (max-width: 1024px) {
+            .col-8, .col-4 { grid-column: span 12; }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 40px; }
+            .screenshot-showcase { flex-direction: column; gap: 16px; }
+            .install-pane { padding: 24px; }
+            .hero { padding: 64px 0 32px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-glows">
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+</div>
+
+<div class="container">
+    <header>
+        <a href="#" class="logo-wrapper">
+            <div class="logo-icon">⏱</div>
+            SubSync
+        </a>
+        <nav class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#install" class="nav-link">Install</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+            <a href="https://github.com/vikasjawaji/jiohotstar-subsync/tree/main/extension" class="btn-git">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                GitHub
+            </a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="badge">
+            <div class="badge-dot"></div>
+            Developer Release v1.0.1
+        </div>
+        <h1>Synchronize subtitles instantly.<br>No video playback drift.</h1>
+        <p>An elegant, draggable floating panel designed directly inside the Hotstar player context. Fix lagging or leading subtitles with sub-millisecond precision.</p>
+        <div class="hero-ctas">
+            <a href="#install" class="btn-primary">Install SubSync</a>
+        </div>
+    </section>
+
+    <section class="bento-section" id="features">
+        <div class="section-header">
+            <h2>Features designed for cinephiles.</h2>
+            <p>A simple product with powerful configurations, packed into a tactile modular design layout.</p>
+        </div>
+
+        <div class="bento-grid">
+            <div class="bento-card col-12">
+                <div>
+                    <div class="card-label">Fluid Interface</div>
+                    <h3>Collapsible Layout Control</h3>
+                    <p>Toggle the interface smoothly between states during playback. Minimize the controller into a compact ambient tracker button that sits out of your way, or click to expand the panel instantly whenever you need to adjust configs.</p>
+                </div>
+                <div class="screenshot-showcase">
+                    <div class="screenshot-item" style="max-height: 520px;">
+                        <img src="assets/demo.gif" alt="Subtitle sync interface drag operation demonstration">
+                        <span class="screenshot-tag">Drag & Sync Demonstration</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-card col-8">
+                <div>
+                    <div class="card-label">Precision Synchronization</div>
+                    <h3>Real-Time Subtitle Shifting</h3>
+                    <p>Compare the exact same timestamp with and without SubSync. Easily shift misaligned subtitle tracks back into perfect phonetic sync using the draggable overlay panel.</p>
+                </div>
+                <div class="screenshot-showcase">
+                    <div class="screenshot-item">
+                        <img src="assets/image_980d76.png" alt="Before Synchronization (Delayed/Out of Sync)">
+                        <span class="screenshot-tag">Before: Subtitles Out of Sync</span>
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="assets/image_980d7b.png" alt="After Synchronization (Synced with -2.00s Offset)">
+                        <span class="screenshot-tag">After: Synced at -2.00s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-card col-4">
+                <div>
+                    <div class="card-label">Fast Execution</div>
+                    <h3>Shortcuts</h3>
+                    <p>Precision shifting shortcuts designed for zero-distraction viewing on Hotstar player viewports.</p>
+                </div>
+                <div class="shortcut-table">
+                    <div class="shortcut-row">
+                        <span class="shortcut-action">Delay Subtitles</span>
+                        <kbd class="keycap">D</kbd>
+                    </div>
+                    <div class="shortcut-row">
+                        <span class="shortcut-action">Advance Subtitles</span>
+                        <kbd class="keycap">A</kbd>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-card col-4">
+                <div>
+                    <div class="card-label">User Customization</div>
+                    <h3>Skin Customization</h3>
+                    <p>Adapt the layout directly to your personal desktop styling. Toggle between our default frosted glass, deep minimal, and high-personality options.</p>
+                </div>
+
+                <div class="theme-preview-box" id="theme-demo-container" data-theme="glass">
+                    <div class="theme-preview-header">
+                        <span class="theme-preview-title" id="theme-name">Glassmorphism (Frosted)</span>
+                        <div class="theme-preview-dots">
+                            <div class="theme-preview-dot"></div>
+                            <div class="theme-preview-dot"></div>
+                        </div>
+                    </div>
+                    <div class="theme-preview-content">
+                        <div class="theme-preview-pill-row">
+                            <div class="theme-preview-pill">SubSync</div>
+                            <div class="theme-preview-pill secondary">0.25s</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="theme-picker-group">
+                    <button class="theme-picker-btn active" data-theme="glass">Glass</button>
+                    <button class="theme-picker-btn" data-theme="simple">Simple</button>
+                    <button class="theme-picker-btn" data-theme="neubrutalism">Funk</button>
+                </div>
+            </div>
+
+            <div class="bento-card col-8">
+                <div>
+                    <div class="card-label">Rich Subtitles Styling</div>
+                    <h3>Take complete control over styling</h3>
+                    <p>Fix hard-to-read font styles on JioHotstar natively. SubSync dynamically intercepts player rendering containers, allowing you to tweak values like font sizes, families (Sans, Serif, Georgia), backgrounds, dropshadows, or highlight glow overlays.</p>
+                </div>
+                <div class="screenshot-showcase" style="margin-top: 24px;">
+                    <div class="shortcut-table" style="flex: 1; margin: 0;">
+                        <div class="shortcut-row">
+                            <span class="shortcut-action">Subtitles Colors</span>
+                            <span style="font-size: 13px; font-weight: 600; color: var(--accent);">White, Yellow, Cyan, Pink</span>
+                        </div>
+                        <div class="shortcut-row">
+                            <span class="shortcut-action">Typography Weight</span>
+                            <span style="font-size: 13px; font-weight: 600; color: #fff;">Light, Normal, Bold, Black</span>
+                        </div>
+                        <div class="shortcut-row">
+                            <span class="shortcut-action">Readability Highlights</span>
+                            <span style="font-size: 13px; font-weight: 600; color: var(--cyan);">Black Box, Glow, Drop Shadow</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="install-section" id="install">
+        <div class="section-header">
+            <h2>Manual Installation Steps</h2>
+            <p>Load the extension codebase locally onto your desktop browser.</p>
+        </div>
+
+        <div class="install-content-wrapper">
+            <div class="install-pane">
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h4>Clone the Repository</h4>
+                        <p>Clone the source repository onto your local machine using the command below, or download the source files directly from <a href="https://github.com/vikasjawaji/jiohotstar-subsync" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">GitHub</a>.</p>
+                        <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: 8px; margin-top: 10px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--cyan); word-break: break-all; white-space: normal;">
+                            git clone https://github.com/vikasjawaji/jiohotstar-subsync.git
+                        </div>
+                    </div>
+                </div>
+                <div class="step-item" style="margin-top: 24px;">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h4>Enable Developer Mode</h4>
+                        <p>Open Google Chrome, navigate straight to <code>chrome://extensions</code> inside your URL bar, and click the "Developer mode" switch in the top-right corner.</p>
+                    </div>
+                </div>
+                <div class="step-item" style="margin-top: 24px;">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h4>Load Unpacked</h4>
+                        <p>Click the "Load unpacked" button in the top-left area, navigate to the <code>extension</code> directory within the cloned repository, and select it to install instantly.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Quick answers on extension features, performance, and configurations.</p>
+        </div>
+
+        <div class="faq-grid">
+            <div class="faq-item">
+                <div class="faq-question">
+                    Does this affect the overall streaming quality or performance?
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Not at all. SubSync executes direct core timing modifications inside isolated main worlds. It does not monitor internet packets or slow down streaming buffers. It works seamlessly even on low-bandwidth setups.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Why are shortcuts not responding on my screen?
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Make sure that your text cursor is not actively focused inside an input element or text box (such as search boxes). Click anywhere blank on the main player viewport, then hit <kbd class="keycap">A</kbd> or <kbd class="keycap">D</kbd> keys.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do I input a precise custom offset value?
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Simply double-click directly inside the timer digits of the SubSync sync tab. It turns into an inline text editor. Type your custom offset (e.g., 2.50 or -1.75) and hit Enter to apply instantly.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">
+            <span style="color: var(--accent);">⏱</span> SubSync
+        </div>
+        <div class="footer-links">
+            <a href="#features" class="footer-link">Features</a>
+            <a href="#install" class="footer-link">Install</a>
+            <a href="#faq" class="footer-link">FAQ</a>
+            <a href="https://github.com/vikasjawaji/jiohotstar-subsync/tree/main/extension" class="footer-link">GitHub</a>
+        </div>
+        <p>© 2026 SubSync Project. Built for cinema enthusiasts.</p>
+    </footer>
+</div>
+
+<script>
+    // Theme Switcher Controller using Data Attributes instead of string-heavy inline styles
+    const themePickers = document.querySelectorAll('.theme-picker-btn');
+    const themeDemoContainer = document.getElementById('theme-demo-container');
+    const themeNameLabel = document.getElementById('theme-name');
+
+    const themeNames = {
+        glass: 'Glassmorphism (Frosted)',
+        simple: 'Minimal Solid',
+        neubrutalism: 'Funk Retro (Stark)'
+    };
+
+    themePickers.forEach(btn => {
+        btn.onclick = () => {
+            themePickers.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const selectedTheme = btn.dataset.theme;
+            themeNameLabel.textContent = themeNames[selectedTheme];
+            themeDemoContainer.setAttribute('data-theme', selectedTheme);
+        };
+    });
+
+    // FAQ Accordion Controller
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.onclick = () => {
+            const isOpen = item.classList.contains('open');
+
+            faqItems.forEach(i => {
+                i.classList.remove('open');
+                i.querySelector('.faq-answer').style.maxHeight = null;
+            });
+
+            if (!isOpen) {
+                item.classList.add('open');
+                const answer = item.querySelector('.faq-answer');
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            }
+        };
+    });
+</script>
+</body>
+</html>
