@@ -16,11 +16,8 @@
             --text: #f8fafc;
             --text-muted: #94a3b8;
             --accent: #f5c842;
-            --accent-rgb: 245, 200, 66;
             --cyan: #4fc3f7;
-            --cyan-rgb: 79, 195, 247;
             --border-glass: rgba(255, 255, 255, 0.08);
-            --border-active: rgba(245, 200, 66, 0.3);
             --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
             --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -44,7 +41,6 @@
             line-height: 1.6;
         }
 
-        /* Ambient Background Glows */
         .bg-glows {
             position: absolute;
             top: 0;
@@ -78,7 +74,6 @@
             padding: 0 24px;
         }
 
-        /* ── STREAMING_CHUNK:Styling the header navigation bar... ── */
         header {
             padding: 24px 0;
             display: flex;
@@ -93,6 +88,8 @@
             font-weight: 800;
             font-size: 20px;
             letter-spacing: -0.5px;
+            color: var(--text);
+            text-decoration: none;
         }
         .logo-icon {
             background: rgba(245, 200, 66, 0.1);
@@ -139,7 +136,6 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* ── STREAMING_CHUNK:Styling the hero section... ── */
         .hero {
             text-align: center;
             padding: 96px 0 64px;
@@ -205,7 +201,6 @@
             box-shadow: 0 15px 30px -5px rgba(255, 255, 255, 0.25);
         }
 
-        /* ── STREAMING_CHUNK:Structuring the bento grid layouts... ── */
         .bento-section {
             padding: 64px 0;
         }
@@ -271,7 +266,6 @@
             line-height: 1.6;
         }
 
-        /* Bento Card Images: Responsive Showcase */
         .screenshot-showcase {
             display: flex;
             gap: 24px;
@@ -309,7 +303,6 @@
             color: var(--text);
         }
 
-        /* Shortcuts Grid layout */
         .shortcut-table {
             margin-top: 24px;
         }
@@ -327,10 +320,6 @@
             font-size: 14px;
             color: var(--text-muted);
         }
-        .key-combo {
-            display: flex;
-            gap: 4px;
-        }
         .keycap {
             font-family: 'DM Mono', monospace;
             font-size: 12px;
@@ -343,14 +332,16 @@
             box-shadow: 0 2px 0 rgba(0,0,0,0.3);
         }
 
-        /* Custom Theme Preview Box */
+        /* Tokenized Theme Switcher Styles (No Hacky JS Layout Injections) */
         .theme-preview-box {
             margin-top: 24px;
             border-radius: 16px;
             padding: 24px;
-            background: var(--bg-surface);
-            border: 1px solid var(--border-glass);
             transition: var(--transition-smooth);
+            background: rgba(22, 28, 41, 0.82);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #f8fafc;
         }
         .theme-preview-header {
             display: flex;
@@ -383,18 +374,55 @@
             gap: 6px;
         }
         .theme-preview-pill {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-glass);
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 11px;
+            transition: var(--transition-smooth);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(245, 200, 66, 0.15);
+            color: #f5c842;
+        }
+        .theme-preview-pill.secondary {
+            background: rgba(255,255,255,0.05);
             color: var(--text-muted);
         }
-        .theme-preview-pill.active {
-            background: var(--accent);
-            color: #000;
+
+        /* Scoped theme state transformations */
+        .theme-preview-box[data-theme="simple"] {
+            background: #0f172a;
+            backdrop-filter: none;
+            border: 1px solid #334155;
+            color: #f8fafc;
+        }
+        .theme-preview-box[data-theme="simple"] .theme-preview-pill {
+            border: 1px solid #1e293b;
+            background: #3b82f6;
+            color: #fff;
+        }
+        .theme-preview-box[data-theme="simple"] .theme-preview-pill.secondary {
+            border: 1px solid #334155;
+            background: rgba(255,255,255,0.05);
+            color: #94a3b8;
+        }
+
+        .theme-preview-box[data-theme="neubrutalism"] {
+            background: #ffffff;
+            backdrop-filter: none;
+            border: 2px solid #000000;
+            color: #000000;
+        }
+        .theme-preview-box[data-theme="neubrutalism"] .theme-preview-pill {
+            border: 2px solid #000000;
+            background: #ffde4d;
+            color: #000000;
             font-weight: 600;
         }
+        .theme-preview-box[data-theme="neubrutalism"] .theme-preview-pill.secondary {
+            border: 2px solid #000000;
+            background: #ffffff;
+            color: #000000;
+        }
+
         .theme-picker-group {
             display: flex;
             gap: 8px;
@@ -419,7 +447,6 @@
             color: var(--text);
         }
 
-        /* ── STREAMING_CHUNK:Styling installation steps... ── */
         .install-section {
             padding: 80px 0;
             border-top: 1px solid var(--border-glass);
@@ -467,7 +494,6 @@
             color: var(--text-muted);
         }
 
-        /* ── STREAMING_CHUNK:Styling the FAQ accordion elements... ── */
         .faq-section {
             padding: 80px 0;
             border-top: 1px solid var(--border-glass);
@@ -518,7 +544,6 @@
             color: var(--accent);
         }
 
-        /* Footer Section */
         footer {
             border-top: 1px solid var(--border-glass);
             padding: 48px 0;
@@ -550,15 +575,12 @@
             color: var(--text);
         }
 
-        /* Responsive Overrides */
         @media (max-width: 1024px) {
-            .col-8 { grid-column: span 12; }
-            .col-4 { grid-column: span 12; }
+            .col-8, .col-4 { grid-column: span 12; }
         }
         @media (max-width: 768px) {
             h1 { font-size: 40px; }
             .screenshot-showcase { flex-direction: column; gap: 16px; }
-            .col-6 { grid-column: span 12; }
             .install-pane { padding: 24px; }
             .hero { padding: 64px 0 32px; }
         }
@@ -566,20 +588,18 @@
 </head>
 <body>
 
-<!-- Ambient background elements -->
 <div class="bg-glows">
     <div class="glow-1"></div>
     <div class="glow-2"></div>
 </div>
 
 <div class="container">
-    <!-- Header Area -->
     <header>
-        <div class="logo-wrapper">
+        <a href="#" class="logo-wrapper">
             <div class="logo-icon">⏱</div>
             SubSync
-        </div>
-        <div class="nav-links">
+        </a>
+        <nav class="nav-links">
             <a href="#features" class="nav-link">Features</a>
             <a href="#install" class="nav-link">Install</a>
             <a href="#faq" class="nav-link">FAQ</a>
@@ -589,24 +609,21 @@
                 </svg>
                 GitHub
             </a>
-        </div>
+        </nav>
     </header>
 
-    <!-- Hero Area -->
     <section class="hero">
         <div class="badge">
             <div class="badge-dot"></div>
-            Developer Release v5.0.0
+            Developer Release v1.0.1
         </div>
         <h1>Synchronize subtitles instantly.<br>No video playback drift.</h1>
         <p>An elegant, draggable floating panel designed directly inside the Hotstar player context. Fix lagging or leading subtitles with sub-millisecond precision.</p>
         <div class="hero-ctas">
             <a href="#install" class="btn-primary">Install SubSync</a>
-            <a href="#features" class="btn-secondary">Explore Features</a>
         </div>
     </section>
 
-    <!-- ── STREAMING_CHUNK:Constructing the Bento Grid Section... ── -->
     <section class="bento-section" id="features">
         <div class="section-header">
             <h2>Features designed for cinephiles.</h2>
@@ -614,8 +631,6 @@
         </div>
 
         <div class="bento-grid">
-
-            <!-- Bento Block 1: Draggable Functionality Demonstration (12 Columns Wide) -->
             <div class="bento-card col-12">
                 <div>
                     <div class="card-label">Fluid Interface</div>
@@ -630,7 +645,6 @@
                 </div>
             </div>
 
-            <!-- Bento Block 2: Visual Interface System Integration (8 Columns Wide) -->
             <div class="bento-card col-8">
                 <div>
                     <div class="card-label">Precision Synchronization</div>
@@ -649,7 +663,6 @@
                 </div>
             </div>
 
-            <!-- Bento Block 3: Keyboard Commands (4 Columns Wide) -->
             <div class="bento-card col-4">
                 <div>
                     <div class="card-label">Fast Execution</div>
@@ -659,16 +672,15 @@
                 <div class="shortcut-table">
                     <div class="shortcut-row">
                         <span class="shortcut-action">Delay Subtitles</span>
-                        <div class="key-combo"><kbd class="keycap">D</kbd></div>
+                        <kbd class="keycap">D</kbd>
                     </div>
                     <div class="shortcut-row">
                         <span class="shortcut-action">Advance Subtitles</span>
-                        <div class="key-combo"><kbd class="keycap">A</kbd></div>
+                        <kbd class="keycap">A</kbd>
                     </div>
                 </div>
             </div>
 
-            <!-- Bento Block 4: Multiple Theme Config (4 Columns Wide) -->
             <div class="bento-card col-4">
                 <div>
                     <div class="card-label">User Customization</div>
@@ -676,9 +688,9 @@
                     <p>Adapt the layout directly to your personal desktop styling. Toggle between our default frosted glass, deep minimal, and high-personality options.</p>
                 </div>
 
-                <div class="theme-preview-box" id="theme-demo-container">
+                <div class="theme-preview-box" id="theme-demo-container" data-theme="glass">
                     <div class="theme-preview-header">
-                        <span class="theme-preview-title" id="theme-name">Glassmorphism</span>
+                        <span class="theme-preview-title" id="theme-name">Glassmorphism (Frosted)</span>
                         <div class="theme-preview-dots">
                             <div class="theme-preview-dot"></div>
                             <div class="theme-preview-dot"></div>
@@ -686,8 +698,8 @@
                     </div>
                     <div class="theme-preview-content">
                         <div class="theme-preview-pill-row">
-                            <div class="theme-preview-pill active" id="theme-pill-1">SubSync</div>
-                            <div class="theme-preview-pill" id="theme-pill-2">0.25s</div>
+                            <div class="theme-preview-pill">SubSync</div>
+                            <div class="theme-preview-pill secondary">0.25s</div>
                         </div>
                     </div>
                 </div>
@@ -699,7 +711,6 @@
                 </div>
             </div>
 
-            <!-- Bento Block 5: Subtitle Customizer (8 Columns Wide) -->
             <div class="bento-card col-8">
                 <div>
                     <div class="card-label">Rich Subtitles Styling</div>
@@ -723,11 +734,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
-
-    <!-- ── STREAMING_CHUNK:Structuring step-by-step developer load guide... ── -->
     <section class="install-section" id="install">
         <div class="section-header">
             <h2>Manual Installation Steps</h2>
@@ -739,8 +747,11 @@
                 <div class="step-item">
                     <div class="step-num">1</div>
                     <div class="step-content">
-                        <h4>Clone or Download Files</h4>
-                        <p>Download the source repository containing the <code>manifest.json</code>, <code>content.js</code>, and <code>page.js</code> files onto your local hard drive.</p>
+                        <h4>Clone the Repository</h4>
+                        <p>Clone the source repository onto your local machine using the command below, or download the source files directly from <a href="https://github.com/vikasjawaji/jiohotstar-subsync" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">GitHub</a>.</p>
+                        <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); padding: 10px 14px; border-radius: 8px; margin-top: 10px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--cyan); word-break: break-all; white-space: normal;">
+                            git clone https://github.com/vikasjawaji/jiohotstar-subsync.git
+                        </div>
                     </div>
                 </div>
                 <div class="step-item" style="margin-top: 24px;">
@@ -754,14 +765,13 @@
                     <div class="step-num">3</div>
                     <div class="step-content">
                         <h4>Load Unpacked</h4>
-                        <p>Click the "Load unpacked" button in the top-left area, navigate to your saved extension directory, and select it to install instantly.</p>
+                        <p>Click the "Load unpacked" button in the top-left area, navigate to the <code>extension</code> directory within the cloned repository, and select it to install instantly.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
     <section class="faq-section" id="faq">
         <div class="section-header">
             <h2>Frequently Asked Questions</h2>
@@ -801,7 +811,6 @@
         </div>
     </section>
 
-    <!-- ── STREAMING_CHUNK:Structuring footer navigation elements... ── -->
     <footer>
         <div class="footer-logo">
             <span style="color: var(--accent);">⏱</span> SubSync
@@ -814,48 +823,18 @@
         </div>
         <p>© 2026 SubSync Project. Built for cinema enthusiasts.</p>
     </footer>
-
 </div>
 
 <script>
-    // ── Interactive Theme Switcher Preview ──
+    // Theme Switcher Controller using Data Attributes instead of string-heavy inline styles
     const themePickers = document.querySelectorAll('.theme-picker-btn');
     const themeDemoContainer = document.getElementById('theme-demo-container');
     const themeNameLabel = document.getElementById('theme-name');
-    const themePill1 = document.getElementById('theme-pill-1');
-    const themePill2 = document.getElementById('theme-pill-2');
 
-    const themeMetadata = {
-        glass: {
-            name: 'Glassmorphism (Frosted)',
-            class: 'theme-glass',
-            style: {
-                background: 'rgba(22, 28, 41, 0.82)',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                color: '#f8fafc'
-            }
-        },
-        simple: {
-            name: 'Minimal Solid',
-            class: 'theme-simple',
-            style: {
-                background: '#0f172a',
-                backdropFilter: 'none',
-                border: '1px solid #334155',
-                color: '#f8fafc'
-            }
-        },
-        neubrutalism: {
-            name: 'Funk Retro (Stark)',
-            class: 'theme-neubrutalism',
-            style: {
-                background: '#ffffff',
-                backdropFilter: 'none',
-                border: '2px solid #000000',
-                color: '#000000'
-            }
-        }
+    const themeNames = {
+        glass: 'Glassmorphism (Frosted)',
+        simple: 'Minimal Solid',
+        neubrutalism: 'Funk Retro (Stark)'
     };
 
     themePickers.forEach(btn => {
@@ -863,44 +842,13 @@
             themePickers.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            const selected = btn.dataset.theme;
-            const meta = themeMetadata[selected];
-
-            // Render updated mock elements matching current selection
-            themeNameLabel.textContent = meta.name;
-
-            // Clear old specific theme classes
-            themeDemoContainer.className = "theme-preview-box";
-            themeDemoContainer.style.background = meta.style.background;
-            themeDemoContainer.style.border = meta.style.border;
-            themeDemoContainer.style.color = meta.style.color;
-
-            if (selected === 'neubrutalism') {
-                themePill1.style.border = "2px solid #000000";
-                themePill1.style.background = "#ffde4d";
-                themePill1.style.color = "#000000";
-                themePill2.style.border = "2px solid #000000";
-                themePill2.style.background = "#fff";
-                themePill2.style.color = "#000";
-            } else if (selected === 'simple') {
-                themePill1.style.border = "1px solid #1e293b";
-                themePill1.style.background = "#3b82f6";
-                themePill1.style.color = "#fff";
-                themePill2.style.border = "1px solid #334155";
-                themePill2.style.background = "rgba(255,255,255,0.05)";
-                themePill2.style.color = "#94a3b8";
-            } else {
-                themePill1.style.border = "1px solid rgba(255, 255, 255, 0.08)";
-                themePill1.style.background = "rgba(245, 200, 66, 0.15)";
-                themePill1.style.color = "#f5c842";
-                themePill2.style.border = "1px solid rgba(255, 255, 255, 0.08)";
-                themePill2.style.background = "rgba(255,255,255,0.05)";
-                themePill2.style.color = "#94a3b8";
-            }
+            const selectedTheme = btn.dataset.theme;
+            themeNameLabel.textContent = themeNames[selectedTheme];
+            themeDemoContainer.setAttribute('data-theme', selectedTheme);
         };
     });
 
-    // ── FAQ Accordion Controller ──
+    // FAQ Accordion Controller
     const faqItems = document.querySelectorAll('.faq-item');
 
     faqItems.forEach(item => {
@@ -908,7 +856,6 @@
         question.onclick = () => {
             const isOpen = item.classList.contains('open');
 
-            // Close all other elements first for a clean visual experience
             faqItems.forEach(i => {
                 i.classList.remove('open');
                 i.querySelector('.faq-answer').style.maxHeight = null;

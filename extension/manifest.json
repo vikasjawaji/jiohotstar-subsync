@@ -1,7 +1,8 @@
 {
   "manifest_version": 3,
   "name": "JioHotstar Subtitle Sync",
-  "version": "5.0.0",
+  "version": "1.0.1",
+  "version_name": "Developer release v1.0.1",
   "description": "Control subtitle delay/advance on JioHotstar with a floating panel.",
   "permissions": ["storage"],
   "content_scripts": [
