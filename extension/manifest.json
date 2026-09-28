@@ -3,7 +3,7 @@
   "name": "JioHotstar Subtitle Sync",
   "version": "1.0.1",
   "version_name": "Developer release v1.0.1",
-  "description": "Control subtitle delay/advance on JioHotstar with a floating panel.",
+  "description": "Fix out-of-sync subtitles on JioHotstar & Hotstar. Delay or advance captions in real time with keyboard shortcuts and a draggable floating panel.",
   "permissions": ["storage"],
   "content_scripts": [
     {

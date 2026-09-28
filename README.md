@@ -1,16 +1,21 @@
 # SubSync — Subtitle Synchronization for Hotstar
 
-An elegant, zero-overhead browser extension built directly into the Hotstar playback viewport. SubSync provides a fluid, draggable overlay to resolve subtitle drift with sub-millisecond precision without disrupting your stream.
+> Are your **Hotstar subtitles out of sync**? SubSync instantly fixes subtitle delay, audio-to-text drift, caption lag, and rendering mismatches on the JioHotstar web player — no app reinstall needed.
+
+A free, open-source Chrome extension to **sync, advance, or delay out-of-sync subtitles on JioHotstar** using real-time keyboard shortcuts and a draggable floating panel. Works on both `jiohotstar.com` and `hotstar.com`.
+
+**Search terms this solves:** *Hotstar subtitle delay fix · JioHotstar subtitles not syncing · subtitle out of sync hotstar chrome · hotstar caption delay · fix subtitle drift jiohotstar · hotstar subtitle offset chrome extension*
 
 ---
 
 ## ⚡ Key Features
 
-* **Collapsible Layout Control:** Seamlessly switch between a lightweight, minimal ambient tracking button that sits entirely out of the way of cinematic frames, and an expanded glassmorphic dashboard.
-* **On-the-Fly Micro Shifting:** Incrementally adjust timing using precise step targets ($\pm$0.25s) or macro jumps ($\pm$1.0s).
-* **Direct Custom Time Entry:** Skip click workflows entirely. Double-click the counter digits to type and validate precise custom offset integers natively.
-* **Zero Viewport Lock:** Fluidly drag the control node anywhere across the active video viewport to match your workspace environment.
-* **Zero Performance Tax:** Operates via isolated script context injections. Does not filter network packets or block stream buffering queues.
+* **Fix Subtitle Delay Instantly:** Advance or delay out-of-sync subtitle tracks on JioHotstar in real time without refreshing the page or restarting your stream.
+* **Collapsible Floating Panel:** Seamlessly switch between a minimal ambient tracker button and an expanded glassmorphic dashboard — stays out of your cinematic frame.
+* **Precision Micro-Shifting:** Fix subtitle drift incrementally with ±0.25s steps or jump ±1.0s at once to correct large audio-caption mismatches.
+* **Direct Offset Entry:** Double-click the counter digits to type a precise custom time offset (e.g. `-2.50`) and apply it instantly.
+* **Draggable Anywhere:** Move the sync panel freely across the video viewport — no fixed position lock.
+* **Zero Performance Impact:** Operates via isolated script injection. Does not intercept network packets or throttle streaming buffers.
 
 ---
 

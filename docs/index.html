@@ -3,7 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SubSync — Subtitle Synchronization for Hotstar</title>
+    <title>SubSync — Fix Hotstar Subtitle Delay & Sync | Free Chrome Extension</title>
+
+    <!-- Primary SEO Meta Tags -->
+    <meta name="description" content="Fix out-of-sync subtitles on JioHotstar and Hotstar instantly. SubSync is a free, open-source Chrome extension to delay or advance subtitle tracks in real time using keyboard shortcuts.">
+    <meta name="keywords" content="hotstar subtitles out of sync, jiohotstar subtitle delay, fix subtitle sync hotstar, hotstar caption lag, subtitle drift hotstar, hotstar subtitle chrome extension, jiohotstar subtitles fix, subtitle sync chrome extension, hotstar captions not working, fix subtitle delay jiohotstar">
+    <meta name="author" content="SubSync Project">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://vikasjawaji.github.io/jiohotstar-subsync/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vikasjawaji.github.io/jiohotstar-subsync/">
+    <meta property="og:title" content="SubSync — Fix Hotstar Subtitle Delay & Sync | Free Chrome Extension">
+    <meta property="og:description" content="Are your JioHotstar subtitles out of sync? SubSync is a free Chrome extension that fixes subtitle delay, caption lag, and audio-text drift in real time.">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SubSync — Fix Hotstar Subtitle Delay & Sync | Free Chrome Extension">
+    <meta name="twitter:description" content="Free Chrome extension to fix out-of-sync subtitles on JioHotstar. Advance or delay captions with keyboard shortcuts — no page refresh needed.">
+
+    <!-- JSON-LD Structured Data: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SubSync — JioHotstar Subtitle Sync",
+      "operatingSystem": "Chrome",
+      "applicationCategory": "BrowserApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Fix out-of-sync subtitles on JioHotstar and Hotstar. A free, open-source Chrome extension to delay or advance caption tracks in real time.",
+      "url": "https://vikasjawaji.github.io/jiohotstar-subsync/",
+      "downloadUrl": "https://github.com/vikasjawaji/jiohotstar-subsync",
+      "author": {
+        "@type": "Person",
+        "name": "Vikas Jawaji"
+      },
+      "keywords": "hotstar subtitle delay, jiohotstar subtitle fix, subtitle sync chrome extension, hotstar captions out of sync"
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -617,8 +660,8 @@
             <div class="badge-dot"></div>
             Developer Release v1.0.1
         </div>
-        <h1>Synchronize subtitles instantly.<br>No video playback drift.</h1>
-        <p>An elegant, draggable floating panel designed directly inside the Hotstar player context. Fix lagging or leading subtitles with sub-millisecond precision.</p>
+        <h1>Fix Hotstar subtitle delay.<br>Sync captions in seconds.</h1>
+        <p>Are your JioHotstar subtitles out of sync? SubSync is a free, open-source Chrome extension that fixes subtitle delay, caption drift, and audio-text mismatch in real time — no page refresh, no reinstall.</p>
         <div class="hero-ctas">
             <a href="#install" class="btn-primary">Install SubSync</a>
         </div>
@@ -781,31 +824,61 @@
         <div class="faq-grid">
             <div class="faq-item">
                 <div class="faq-question">
-                    Does this affect the overall streaming quality or performance?
+                    Why are my JioHotstar subtitles out of sync?
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    Not at all. SubSync executes direct core timing modifications inside isolated main worlds. It does not monitor internet packets or slow down streaming buffers. It works seamlessly even on low-bandwidth setups.
+                    Subtitle drift on JioHotstar and Hotstar usually happens due to network buffering delays, player rendering lag, or encoding mismatches between the audio track and caption track. SubSync fixes this directly inside the browser without refreshing the stream — just press <kbd class="keycap">A</kbd> to advance or <kbd class="keycap">D</kbd> to delay captions until they're in sync.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    Why are shortcuts not responding on my screen?
+                    Does this work on both JioHotstar and Hotstar?
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    Make sure that your text cursor is not actively focused inside an input element or text box (such as search boxes). Click anywhere blank on the main player viewport, then hit <kbd class="keycap">A</kbd> or <kbd class="keycap">D</kbd> keys.
+                    Yes. SubSync is active on both <strong>jiohotstar.com</strong> and <strong>hotstar.com</strong>. The extension auto-activates whenever you open any content on either domain — no configuration required.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    How do I input a precise custom offset value?
+                    Does this affect the streaming quality or performance?
                     <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-answer">
-                    Simply double-click directly inside the timer digits of the SubSync sync tab. It turns into an inline text editor. Type your custom offset (e.g., 2.50 or -1.75) and hit Enter to apply instantly.
+                    Not at all. SubSync modifies subtitle timing inside an isolated script context. It does not intercept network packets, slow down streaming buffers, or affect video quality in any way. It works seamlessly even on low-bandwidth connections.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Why are keyboard shortcuts not responding?
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Make sure your text cursor is not focused inside a search box or input field. Click anywhere on the main video player area first, then press <kbd class="keycap">A</kbd> (advance) or <kbd class="keycap">D</kbd> (delay) to sync subtitles.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do I enter a precise custom subtitle offset?
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Double-click directly on the timer digits in the SubSync panel. The counter becomes an inline text editor — type your exact offset value (e.g. <code>2.50</code> or <code>-1.75</code> seconds) and press Enter to apply it instantly. This is useful when subtitles are consistently delayed by a fixed amount.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is SubSync free and open source?
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes — completely free, no ads, no tracking. The full source code is publicly available on <a href="https://github.com/vikasjawaji/jiohotstar-subsync" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500;">GitHub</a>. You can audit every line before installing.
                 </div>
             </div>
         </div>
@@ -821,7 +894,7 @@
             <a href="#faq" class="footer-link">FAQ</a>
             <a href="https://github.com/vikasjawaji/jiohotstar-subsync/tree/main/extension" class="footer-link">GitHub</a>
         </div>
-        <p>© 2026 SubSync Project. Built for cinema enthusiasts.</p>
+        <p>© 2026 SubSync Project — Free Chrome extension to fix Hotstar subtitle delay &amp; JioHotstar caption sync.</p>
     </footer>
 </div>
 
